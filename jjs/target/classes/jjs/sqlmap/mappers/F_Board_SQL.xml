@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sqlmap.mappers.FBoard_SQL">
+	
+		<resultMap type="FBoard" id="FBoardResult">
+		<result property="FBoardNo" column="FBoardNo"/>
+		<result property="userId" column="userId"/>
+		<result property="FTitle" column="FTitle"/>
+		<result property="FContent" column="FContent"/>
+		<result property="FCreateDate" column="FCreateDate"/>
+		<result property="FBoardType" column="FBoardType"/>
+	</resultMap>
+
+	<select id="selectFBoardList" resultMap="FBoardResult">
+		SELECT * FROM FBoard
+		<where>
+      	<if test="searchType=='fullSearch' and keyword !=null and keyword !=''">
+			AND FTitle like CONCAT('%',#{keyword},'%') or FContent like CONCAT('%',#{keyword},'%') or userId like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='FTitle' and keyword !=null and keyword !=''">
+        	AND FTitle like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='FContent' and keyword !=null and keyword !=''">
+         	AND FContent like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='userId' and keyword !=null and keyword !=''">
+            AND userId like CONCAT('%',#{keyword},'%')
+      	</if>
+      	</where>
+      	ORDER BY FBoardType ASC, FBoardNo DESC 
+      	LIMIT #{startList},#{listSize}
+	</select>
+	
+	<select id="FBoardDetail" resultMap="FBoardResult">
+		SELECT * FROM FBoard WHERE FBoardNo = #{FBoardNo}
+	</select>
+	
+	<select id="FBoardTotal" resultType="int">
+		SELECT COUNT(*) as listCnt FROM FBoard
+		<where>
+		<if test="searchType=='fullSearch' and keyword !=null and keyword !=''">
+			AND FTitle like CONCAT('%',#{keyword},'%') or FContent like CONCAT('%',#{keyword},'%') or userId like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='FTitle' and keyword !=null and keyword !=''">
+			AND FTitle like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='FContent' and keyword !=null and keyword !=''">
+			AND FContent like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='userId' and keyword !=null and keyword !=''">
+			AND userId like CONCAT('%',#{keyword},'%')
+		</if>
+		</where>
+			ORDER BY FBoardType ASC, FBoardNo DESC 
+	</select>
+	
+	
+	<insert id="FBoardInsert">
+		INSERT INTO FBoard(FBoardNo,userId,FTitle,FContent,FCreateDate,FBoardType) values(
+		#{FBoardNo},
+		#{userId},
+		#{FTitle},
+		#{FContent},
+		now(),
+		#{FBoardType})
+	</insert>
+	
+	<update id="FBoardUpdate">
+		UPDATE FBoard SET FBoardType = #{FBoardType}, FTitle = #{FTitle}, FContent = #{FContent}
+		WHERE FBoardNo = #{FBoardNo} 
+	</update>
+
+	<delete id="FBoardDelete">
+		DELETE FROM FBoard
+		WHERE FBoardNo = #{FBoardNo}
+	</delete>
+	
+	<select id="FBoardCnt">
+		SET @COUNT = 0
+	</select>
+	
+	<select id="FBoardCnt2">
+		UPDATE FBoard SET FBoardNo = @COUNT:=@COUNT+1
+	</select>
+	
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sqlmap.mappers.Board_SQL">
+	
+	<resultMap type="LBoard" id="LBoardResult">
+		<result property="LBoardNo" column="LBoardNo"/>
+		<result property="userId" column="userId"/>
+		<result property="LTitle" column="LTitle"/>
+		<result property="LContent" column="LContent"/>
+		<result property="LCreateDate" column="LCreateDate"/>
+		<result property="LBoardType" column="LBoardType"/>
+	</resultMap>
+
+	<select id="LBoardList" resultMap="LBoardResult">
+		SELECT * FROM LBoard
+		<where>
+      	<if test="searchType=='fullSearch' and keyword !=null and keyword !=''">
+			AND LTitle like CONCAT('%',#{keyword},'%') or LContent like CONCAT('%',#{keyword},'%') or userId like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='title' and keyword !=null and keyword !=''">
+        	AND LTitle like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='content' and keyword !=null and keyword !=''">
+         	AND LContent like CONCAT('%',#{keyword},'%')
+      	</if>
+      	<if test="searchType=='userId' and keyword !=null and keyword !=''">
+            AND userId like CONCAT('%',#{keyword},'%')
+      	</if>
+      	</where>
+      	ORDER BY LBoardType ASC, LBoardNo DESC 
+      	LIMIT #{startList},#{listSize}
+	</select>
+	
+	<select id="LBoardDetail" resultMap="LBoardResult">
+		SELECT * FROM LBoard WHERE LBoardNo = #{LBoardNo}
+	</select>
+	
+	<select id="LBoardTotal" resultType="int">
+		SELECT COUNT(*) as listCnt FROM LBoard
+		<where>
+		<if test="searchType=='fullSearch' and keyword !=null and keyword !=''">
+			AND LTitle like CONCAT('%',#{keyword},'%') or LContent like CONCAT('%',#{keyword},'%') or userId like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='title' and keyword !=null and keyword !=''">
+			AND LTitle like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='content' and keyword !=null and keyword !=''">
+			AND LContent like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='userId' and keyword !=null and keyword !=''">
+			AND userId like CONCAT('%',#{keyword},'%')
+		</if>
+		</where>
+			ORDER BY LBoardType ASC, LBoardNo DESC 
+	</select>
+	
+	
+	<insert id="LBoardInsert">
+		INSERT INTO LBoard(LBoardNo,userId,LTitle,LContent,LCreateDate,LBoardType) values(
+		#{LBoardNo},
+		#{userId},
+		#{LTitle},
+		#{LContent},
+		now(),
+		#{LBoardType})
+	</insert>
+	
+	<update id="LBoardUpdate">
+		UPDATE LBoard SET LBoardType = #{LBoardType}, LTitle = #{LTitle}, LContent = #{LContent}
+		WHERE LBoardNo = #{LBoardNo} 
+	</update>
+
+	<delete id="LBoardDelete">
+		DELETE FROM LBoard
+		WHERE LBoardNo = #{LBoardNo}
+	</delete>
+	
+	<select id="LBoardCnt()">
+		SET @COUNT = 0
+	</select>
+	
+	<select id="LBoardCnt2()">
+		UPDATE LBoard SET LBoardNo = @COUNT:=@COUNT+1
+	</select>
+
+</mapper>

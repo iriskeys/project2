@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+		<typeAlias alias="User" type="jjs.service.UserVO"/>
+		<typeAlias alias="LBoard" type="jjs.service.L_BoardVO"/>
+		<typeAlias alias="FBoard" type="jjs.service.F_BoardVO"/>
+    </typeAliases>
+</configuration>
