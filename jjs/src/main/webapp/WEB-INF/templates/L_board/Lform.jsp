@@ -44,13 +44,14 @@
 <title>자유게시판</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/templates/header.jsp"></jsp:include>
 <div id="con">
      <div id="login">
         <div id="login_form">
  
 <br><br>
     <div class="container">
-        <div class="page-header" text-align="left" style="color: #FDF5DC; font-size: 50px; text-align:left;">
+        <div class="page-header" text-align="left" style="color: #000000; font-size: 50px; text-align:left;">
               게시글 등록
         </div>
         <br/>
@@ -58,7 +59,7 @@
         <input id="L_CreateDate" type="hidden" />
         <table class="table">
             <tr>
-                <th style="padding:13px 0 0 15px; color: #FDF5DC; font-size: 17px;">게시판 선택</th>
+                <th style="padding:13px 0 0 15px; color: #000000; font-size: 17px;">게시판 선택</th>
                 <td>
                     <div class="pull-left">
                         <select class="form-control input-sm" id="L_BoardType">
@@ -70,11 +71,11 @@
                 </td>
             </tr>            
             <tr>
-                <th style="padding:13px 0 0 15px; color: #FDF5DC; font-size: 17px;">제목</th>
+                <th style="padding:13px 0 0 15px; color: #000000; font-size: 17px;">제목</th>
                 <td><input id="L_Title" type="text" class="col-md-1 form-control input-sm" required="required" placeholder="제목을 입력하세요"/></td>
             </tr>
             <tr>
-                <th style="padding:13px 0 0 15px; color: #FDF5DC; font-size: 17px;">내용</th>
+                <th style="padding:13px 0 0 15px; color: #000000; font-size: 17px;">내용</th>
                 <td><textarea id="L_Content" class="col-md-1 form-control input-sm" maxlength="140" rows="7" style="height: 200px;" required="required" placeholder="내용을 입력하세요"></textarea><span class="help-block"></span>
                 </td>
             </tr>

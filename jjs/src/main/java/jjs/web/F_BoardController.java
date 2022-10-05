@@ -83,7 +83,7 @@ public class F_BoardController {
 		String userId = "";
 		String data = "";
 		
-		session = request.getSession();
+		
 		F_boardVO.getFBoardType();
 		F_boardVO.getFTitle();
 		F_boardVO.getFContent();
@@ -104,7 +104,7 @@ public class F_BoardController {
 		String userId = "";
 		String data = "";
 		
-		session = request.getSession();
+		
 		
 		if(userId.equals(F_boardVO.getUserId())) {
 			F_boardService.F_BoardDelete(F_boardVO);

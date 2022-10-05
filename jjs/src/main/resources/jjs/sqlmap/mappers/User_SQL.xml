@@ -2,84 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.sqlmap.mappers.User_SQL">
 
-<!-- <resultMap type="user" id="userResult">
+ <resultMap type="user" id="userResult">
       <result property="userId" column="userId" />
       <result property="userPw" column="userPw" />
       <result property="userName" column="userName" />
+      <result property="userNickname" column="userNickname" />
       <result property="userPhone" column="userPhone" />
       <result property="userEmail" column="userEmail" />
       <result property="userRole" column="userRole" />
       <result property="createDate" column="createDate" />
 </resultMap>  
 
-   이름,전화번호 세션값 가져옴 
-   <select id="selectUserName" resultType="string">
-      select userName from tp_user where userId=#{userId}
-   </select>
    
-   <select id="selectUserPhone" resultType="string">
-      select userPhone from tp_user where userId=#{userId}
+   <select id="selectUserName" resultType="string">
+      select userName from user where userId=#{userId}
    </select>
-
-	<select id="selectUserBirth" resultType="string">
-      SELECT ROUND((TO_DAYS(NOW()) - (TO_DAYS(userBirth))) / 365) AS age FROM tp_user WHERE userId=#{userId}
-   </select>
-
-   회원가입
-   <insert id="insertUser" parameterType="tp.service.UserVO">
-      INSERT INTO tp_user
-      (USERID, USERPW, USERNAME, USERBIRTH, USERPHONE, USEREMAIL, USERROLE, CREATEDATE)
-      VALUES(#{userId},#{userPw},#{userName},#{userBirth},#{userPhone}, #{userEmail},#{userRole},now());
+  
+   <insert id="insertUser" parameterType="jjs.service.UserVO">
+      INSERT INTO user
+      (USERID, USERPW, USERNAME, USERNICKNAME, USERPHONE, USEREMAIL, USERROLE, CREATEDATE)
+      VALUES(#{userId},#{userPw},#{userName},#{userNickname},#{userPhone}, #{userEmail},#{userRole},now());
    </insert>
    
-    아이디 중복체크
-    존재하면 count=1, 존재하지않으면 count=0 으로 조회되므로 resultType="int"
-   <select id="idCheck" parameterType="tp.service.UserVO" resultType="int">
-         SELECT COUNT(*) FROM tp_user WHERE USERID = #{userId}
+   <select id="idCheck" parameterType="jjs.service.UserVO" resultType="int">
+         SELECT COUNT(*) FROM user WHERE USERID = #{userId}
    </select> 
    
-    로그인
+  
    <select id="loginUser" resultType="int">
-        SELECT COUNT(*) FROM tp_user WHERE USERID= #{userId} AND USERPW= #{userPw}
+        SELECT COUNT(*) FROM user WHERE USERID= #{userId} AND USERPW= #{userPw}
    </select>
    
-   회원탈퇴
-   <delete id="dropUser">
-      DELETE FROM tp_user WHERE USERID= #{userId} AND USERPW= #{userPw}
+
+   <delete id="deleteUser">
+      DELETE FROM user WHERE USERID= #{userId} AND USERPW= #{userPw}
    </delete>
    
-   회원수정
-   <update id="updateUser">
-      UPDATE tp_user SET USERPW= #{userPw}, USEREMAIL= #{userEmail}, USERPHONE= #{userPhone} WHERE USERID= #{userId}
-   </update>
-   
-   마이페이지 세션비밀번호가쟈와야해
-   <select id="selectUser" resultMap="userResult">  
-      SELECT * FROM tp_user WHERE USERID=#{userId}
-   </select>
-   
-   ADMIN으로 회원 전체 조회 
-   <select id="selectUserList" resultMap="userResult">
-       SELECT * FROM tp_user order by createDate
-   </select>
-   
-   name 수정 
-   <update id="updateName">
-      UPDATE tp_user SET  USERNAME= #{userName} WHERE USERID = #{userId}
-   </update>
-   
-   phonenumber 수정 
-   <update id="updatePhone">
-      UPDATE tp_user SET USERPHONE = #{userPhone} WHERE USERID = #{userId}
-   </update>
-   
-   email수정
-   <update id="updateEmail">
-      UPDATE tp_user SET USEREMAIL = #{userEmail} WHERE USERID = #{userId}
-   </update>
-
-   비밀번호 수정
-   <update id="updatePass">
-      UPDATE tp_user SET USERPW = #{userPw} WHERE USERID = #{userId}
-   </update> -->
+ 
 </mapper>

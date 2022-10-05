@@ -55,14 +55,15 @@ $(document).on('click','#btnSearch',function(e){
 <title>자유게시판 리스트</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/templates/header.jsp"></jsp:include>
 <div id="con">
       <div id="login">
          <div id="login_form">
 <br><br>
 <div class="container">
 <br><br>
-   <div class="page-header" style="color: #FDF5DC; font-size: 50px; text-align:left;">
-      <h1>게시판</h1>
+   <div class="page-header" style="color: #000000; font-size: 50px; text-align:left;">
+      <h1>자유게시판</h1>
    </div>
    <br/>
    <div id="mainHide">
@@ -90,7 +91,7 @@ $(document).on('click','#btnSearch',function(e){
       </table>
             
    </div>
-   <div class="pull-right" style="width: 100px; margin: 10px 0;">
+   <div class="float-right" style="width: 100px; margin: 10px 0;">
       <input type="button" onclick="location.href='FBoardInsert.do'" value="등록" class="btn5"></input> 
    </div>
    <br/>
